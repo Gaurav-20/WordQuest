@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { ALPHABET_REGEX, GUESS_LENGTH, MAX_GUESSES } from '../constants'
 
 const useWordle = (solution) => {
 
@@ -10,7 +11,28 @@ const useWordle = (solution) => {
 
   // Format a guess into an array of letter objects
   const formatGuess = () => {
+    let solutionArray = [...solution]
+    let formattedGuess = [...currentGuess].map((c) => {
+      return { key: c, color: 'grey' }
+    })
 
+    // Find green letters, if any
+    formattedGuess.forEach((element, index) => {
+      if (solutionArray[index] === element.key) {
+        formattedGuess[index].color = 'green'
+        solutionArray[index] = null
+      }
+    })
+
+    // Find yellow letters, if any
+    formattedGuess.forEach((element, index) => {
+      if (solutionArray.includes(element.key) && element.color !== 'green') {
+        formattedGuess[index].color = 'yellow'
+        solutionArray[solutionArray.indexOf(element.key)] = null
+      }
+    })
+
+    return formattedGuess
   }
 
   // Add new guess to the guesses state
@@ -24,6 +46,28 @@ const useWordle = (solution) => {
   // Add this guess when user presses enter (and it is valid)
   const handleKeyUp = ({ key }) => {
 
+    // Case if the enter key is pressed for submitting guess
+    if (key === 'Enter') {
+      // Only add guess if :
+      // Turn is less than equal to MAX_GUESSES
+      // If this guess is not previously added
+      // Length of current word is exactly MAX_WORD_LENGTH
+      if (turn > MAX_GUESSES) {
+        console.log('All guesses are already used up')
+        return
+      }
+      if (history.includes(currentGuess)) {
+        console.log('This word was already tried')
+        return
+      }
+      if (currentGuess.length !== GUESS_LENGTH) {
+        console.log(`The word must be exactly ${GUESS_LENGTH} chars long`)
+        return
+      }
+      const formatted = formatGuess()
+      console.log(formatted)
+    }
+
     // Case if the backspace key is pressed for deleting
     if (key === 'Backspace') {
       if (currentGuess.length > 0) {
@@ -33,8 +77,8 @@ const useWordle = (solution) => {
     }
     
     // Key must be alphabet only, check for that
-    if (/^[A-Za-z]$/.test(key)) {
-      if (currentGuess.length < 5) {
+    if (ALPHABET_REGEX.test(key)) {
+      if (currentGuess.length < GUESS_LENGTH) {
         setCurrentGuess(currentGuess + key.toUpperCase())
       }
     }
