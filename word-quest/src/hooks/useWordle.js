@@ -5,7 +5,7 @@ const useWordle = (solution) => {
 
   const [turn, setTurn] = useState(0)
   const [currentGuess, setCurrentGuess] = useState('')
-  const [guesses, setGuesses] = useState([]) // guess is an array of objs denoting character and color
+  const [guesses, setGuesses] = useState([...Array(MAX_GUESSES)]) // guess is an array of objs denoting character and color
   const [history, setHistory] = useState([]) // guess is a string of actual guessed words
   const [isCorrect, setIsCorrect] = useState(false)
 
@@ -38,8 +38,22 @@ const useWordle = (solution) => {
   // Add new guess to the guesses state
   // Update the isCorrect state if the solution is correct
   // Increment turn by one
-  const addNewGuess = () => {
-
+  const addNewGuess = (formattedGuess) => {
+    if (currentGuess === solution) {
+      setIsCorrect(true)
+    }
+    setGuesses((prevGuesses) => {
+      let newGuesses = [...prevGuesses]
+      newGuesses[turn] = formattedGuess
+      return newGuesses
+    })
+    setHistory((prevHistory) => {
+      return [...prevHistory, currentGuess]
+    })
+    setTurn((prevTurn) => {
+      return prevTurn + 1
+    })
+    setCurrentGuess('')
   }
 
   // Handle key-up event and track current guess
@@ -64,8 +78,8 @@ const useWordle = (solution) => {
         console.log(`The word must be exactly ${GUESS_LENGTH} chars long`)
         return
       }
-      const formatted = formatGuess()
-      console.log(formatted)
+      const formattedGuess = formatGuess()
+      addNewGuess(formattedGuess)
     }
 
     // Case if the backspace key is pressed for deleting
@@ -79,7 +93,7 @@ const useWordle = (solution) => {
     // Key must be alphabet only, check for that
     if (ALPHABET_REGEX.test(key)) {
       if (currentGuess.length < GUESS_LENGTH) {
-        setCurrentGuess(currentGuess + key.toUpperCase())
+        setCurrentGuess((prev) => prev + key.toUpperCase())
       }
     }
 
