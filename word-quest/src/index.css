@@ -121,8 +121,15 @@ h1 {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-.modal .solution {
+.modal .solution.correct {
   color: #22762c;
+  font-weight: bold;
+  font-size: 0.8em;
+  letter-spacing: 1px;
+}
+
+.modal .solution.incorrect {
+  color: #de1616;
   font-weight: bold;
   font-size: 0.8em;
   letter-spacing: 1px;
