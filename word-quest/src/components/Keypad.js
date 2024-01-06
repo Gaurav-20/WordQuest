@@ -4,10 +4,11 @@ export default function Keypad({ usedKeys }) {
   const [letters, setLetters] = useState(null)
 
   useEffect(() => {
-    fetch('http://localhost:3001/letters')
+    fetch('data/word-database.json')
     .then(res => res.json())
     .then(json => {
-      setLetters(json)
+      const fetchedLetters = json['letters']
+      setLetters(fetchedLetters)
     })
   }, [])
 
@@ -15,7 +16,6 @@ export default function Keypad({ usedKeys }) {
     <div className = 'keypad'>
       {letters && letters.map((letter) => {
         const color = usedKeys[letter.key]
-        console.log(letter, color)
         return (
           <div key = { letter.key } className = { color }>{ letter.key.toUpperCase() }</div>
         )

@@ -6,10 +6,11 @@ function App() {
   const [solution, setSolution] = useState(null)
 
   useEffect(() => {
-    fetch('http://localhost:3001/solutions')
+    fetch('data/word-database.json')
     .then(res => res.json())
     .then(json => {
-      const randomSolution = json[Math.floor(Math.random() * json.length)]
+      const solutionsArr = json['solutions']
+      const randomSolution = solutionsArr[Math.floor(Math.random() * solutionsArr.length)]
       setSolution(randomSolution.word.toUpperCase())
     })
   }, [setSolution])
