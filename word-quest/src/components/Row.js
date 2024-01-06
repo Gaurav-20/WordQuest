@@ -8,7 +8,7 @@ export default function Row({ guess, currentGuess }) {
       <div className = 'row past'>
         {
           guess.map((letter, index) => (
-            <div key = {index} className = {letter.color}>{letter.key}</div>
+            <div key = { index } className = { letter.color }>{ letter.key }</div>
           ))
         }
       </div>
@@ -20,7 +20,7 @@ export default function Row({ guess, currentGuess }) {
       <div className = 'row current'>
         {
           letters.map((letter, index) => (
-            <div key = { index } className = 'filled'>{letter}</div>
+            <div key = { index } className = 'filled'>{ letter }</div>
           ))
         }
         {
@@ -38,7 +38,7 @@ export default function Row({ guess, currentGuess }) {
   }
 
   return (
-    <div className='row'>
+    <div className = 'row'>
       <div></div>
       <div></div>
       <div></div>

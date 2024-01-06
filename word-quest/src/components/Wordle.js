@@ -14,12 +14,10 @@ export default function Wordle({ solution }) {
     window.addEventListener('keyup', handleKeyUp)
     if (isCorrect) {
       setTimeout(setShowModal(true), 2000)
-      console.log(`You found the word correctly within ${turn} attempts!`)
       window.removeEventListener('keyup', handleKeyUp)
     }
     if (turn >= MAX_GUESSES) {
       setTimeout(setShowModal(true), 2000)
-      console.log(`You are out of attempts.. The word was ${solution}!`)
       window.removeEventListener('keyup', handleKeyUp)
     }
     return () => window.removeEventListener('keyup', handleKeyUp)
@@ -27,8 +25,6 @@ export default function Wordle({ solution }) {
 
   return (
     <div>
-      <div>Current guess = { currentGuess }</div>
-      <div>Solution = { solution }</div> {/* for dev reference only */}
       <Grid currentGuess = { currentGuess } guesses = { guesses } turn = { turn } />
       <Keypad usedKeys = { usedKeys } />
       {showModal && <Modal isCorrect = { isCorrect } turn = { turn } solution = { solution } />}
