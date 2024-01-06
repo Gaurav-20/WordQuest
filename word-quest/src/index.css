@@ -75,7 +75,7 @@ h1 {
   margin: 20px auto;
 }
 
-.keypad > div {
+.keypad > button {
   margin: 5px;
   width: 40px;
   height: 50px;
@@ -85,19 +85,19 @@ h1 {
   line-height: 50px;
 }
 
-.keypad > div.green {
+.keypad > button.green {
   background: #5ac85a;
   color: white;
   transition: all 0.3s ease-in;
 }
 
-.keypad > div.yellow {
+.keypad > button.yellow {
   background: #e2cc68;
   color: white;
   transition: all 0.3s ease-in;
 }
 
-.keypad > div.grey {
+.keypad > button.grey {
   background: #a1a1a1;
   color: white;
   transition: all 0.3s ease-in;

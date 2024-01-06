@@ -6,7 +6,7 @@ function App() {
   const [solution, setSolution] = useState(null)
 
   useEffect(() => {
-    fetch('data/word-database.json')
+    fetch('database.json')
     .then(res => res.json())
     .then(json => {
       const solutionsArr = json['solutions']
@@ -18,7 +18,7 @@ function App() {
   return (
     <div className = 'App'>
       <h1>Word Quest</h1>
-      {solution && <Wordle solution={ solution } />}
+      {solution && <Wordle solution = { solution } />}
     </div>
   );
 }
